@@ -20,33 +20,42 @@ class EPDX:
         self.epd.Clear()
         self.display_name = display_name
 
-        self.similarity_threshold = 0.95
+        self.similarity_threshold = 0.50
 
         os.environ['DISPLAY'] = self.display_name
         if 'XAUTHORITY' not in os.environ:
             os.environ['XAUTHORITY'] = f'{os.environ["HOME"]}/.Xauthority' 
 
-        # self.capture_x11_frame()
-        # self.process_image()
+        self.capture_x11_frame()
+        self.process_image()
 
-        # self.previous_image = self.image
+        self.previous_image = copy.copy(self.image)
 
 
     def spin(self):
         while True:
             self.capture() 
-            time.sleep(5)
 
 
     def capture(self):
         self.capture_x11_frame()
         self.process_image()
-        self.previous_image = self.image
+        similarity = self.phash_similarity()  
 
-        if self.is_new_image_different():
+        if 0.6 < similarity <= 0.99:
+            self.epd.init_fast()
+            self.epd.display(self.epd.getbuffer(self.image))
+            self.epd.sleep()
+            self.previous_image = copy.copy(self.image)
+            time.sleep(0.1)
+        elif similarity <= 0.6:
             self.epd.init()
             self.epd.display(self.epd.getbuffer(self.image))
             self.epd.sleep()
+            self.previous_image = copy.copy(self.image)
+            time.sleep(0.1)
+        else:
+            return
 
 
     def capture_x11_frame(self):
@@ -72,10 +81,6 @@ class EPDX:
         hamming_distance = hash1 - hash2
         max_bits = len(hash1.hash) ** 2
         return 1.0 - (hamming_distance / max_bits)
-
-
-    def is_new_image_different(self):
-        return self.phash_similarity() > self.similarity_threshold
 
 
 
