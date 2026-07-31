@@ -5,7 +5,7 @@ import sys
 import os
 import logging
 import time
-from PIL import Image
+from PIL import Image, ImageFilter, ImageChops
 import imagehash
 import mss
 import traceback
@@ -71,7 +71,9 @@ class EPDX:
             self.image.thumbnail((self.epd.width, self.epd.height), Image.Resampling.LANCZOS)
         paste_x = (self.epd.width - self.image.size[0]) // 2
         paste_y = (self.epd.height - self.image.size[1]) // 2
-        self.image = self.image.convert('1')
+        self.image = self.image.convert('L')
+        self.image = self.image.filter(ImageFilter.UnsharpMask(radius=100, percent=1500, threshold=3))
+        self.image = self.image.convert('1') # Floyd-Steinberg dithering
         bg_image.paste(self.image, (paste_x, paste_y))
         self.image = bg_image
 
