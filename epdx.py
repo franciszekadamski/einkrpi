@@ -29,7 +29,7 @@ class EPDX:
         self.capture_x11_frame()
         self.process_image()
 
-        self.previous_image = copy.copy(self.image)
+        self.previous_image = Image.new('1', (self.epd.width, self.epd.height), 255) 
 
 
     def spin(self):
@@ -42,18 +42,18 @@ class EPDX:
         self.process_image()
         similarity = self.phash_similarity()  
 
-        if 0.6 < similarity <= 0.99:
+        if 0.7 <= similarity < 1.0:
             self.epd.init_fast()
             self.epd.display(self.epd.getbuffer(self.image))
-            self.epd.sleep()
+            # self.epd.sleep()
             self.previous_image = copy.copy(self.image)
-            time.sleep(0.1)
-        elif similarity <= 0.6:
+            # time.sleep(0.1)
+        elif similarity < 0.7:
             self.epd.init()
             self.epd.display(self.epd.getbuffer(self.image))
             self.epd.sleep()
             self.previous_image = copy.copy(self.image)
-            time.sleep(0.1)
+            # time.sleep(0.1)
         else:
             return
 
@@ -67,7 +67,8 @@ class EPDX:
 
     def process_image(self):
         bg_image = Image.new('1', (self.epd.width, self.epd.height), 255) 
-        self.image.thumbnail((self.epd.width, self.epd.height), Image.Resampling.LANCZOS)
+        if self.image.size[0] != self.epd.width or self.image.size[1] != self.epd.height:
+            self.image.thumbnail((self.epd.width, self.epd.height), Image.Resampling.LANCZOS)
         paste_x = (self.epd.width - self.image.size[0]) // 2
         paste_y = (self.epd.height - self.image.size[1]) // 2
         self.image = self.image.convert('1')
