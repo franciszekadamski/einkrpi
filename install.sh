@@ -9,7 +9,7 @@ sudo apt install xserver-xorg-video-dummy
 
 echo "Installing python requirements"
 
-python3 pip3 install -r requirements.txt 
+pip3 install -r requirements.txt --break-system-packages
 
 echo "Copying the dummy screen file"
 if [ -z /etc/X11/xorg.conf.d/20-dummy.conf ]; then
