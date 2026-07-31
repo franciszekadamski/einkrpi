@@ -5,6 +5,7 @@ Wants=graphical.target
 
 [Service]
 Type=simple
+EnvironmentFile=${HOME}/.config/einkrpi/config.env
 ExecStart=${HOME}/.local/share/einkrpi/epdx.py
 WorkingDirectory=${HOME}/.local/share/einkrpi
 USER=${USER}

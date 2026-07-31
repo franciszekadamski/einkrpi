@@ -1,7 +1,6 @@
 #!/usr/bin/bash
 
 
-
 echo "Installing xserver-xorg-video-dummy"
 
 sudo apt update
@@ -22,6 +21,13 @@ if [ ! -d $HOME/.local/share ]; then
     echo "Creating $HOME/.local/share directory"
     mkdir -p $HOME/.local/share
 fi
+
+if [ ! -d $HOME/.config/einkrpi ]; then
+    echo "Creating $HOME/.config/einkrpi directory"
+    mkdir -p $HOME/.config/einkrpi
+fi
+
+echo "HOME=${HOME}" > $HOME/.config/einkrpi/config.env
 
 if [ ! -d $HOME/.local/share/einkrpi ]; then
     echo "Cloning einkrpi repository to $HOME/.local/share/"
