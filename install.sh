@@ -7,22 +7,30 @@ echo "Installing xserver-xorg-video-dummy"
 sudo apt update
 sudo apt install xserver-xorg-video-dummy
 
+echo "Installing python requirements"
+
+python3 pip3 install -r requirements.txt 
+
 echo "Copying the dummy screen file"
-sudo cp dummy.conf /etc/X11/xorg.conf.d/20-dummy.conf
+if [ -z /etc/X11/xorg.conf.d/20-dummy.conf ]; then
+    sudo cp dummy.conf /etc/X11/xorg.conf.d/20-dummy.conf
+fi
 
 echo "Installing einkrpi"
 
-if [ ! -d $HOME/.local/share]; then
+if [ ! -d $HOME/.local/share ]; then
     echo "Creating $HOME/.local/share directory"
     mkdir -p $HOME/.local/share
 fi
 
 if [ ! -d $HOME/.local/share/einkrpi ]; then
     echo "Cloning einkrpi repository to $HOME/.local/share/"
+    cd $HOME/.local/share
     git clone https://github.com/franciszekadamski/einkrpi.git
 fi
 
-cd $HOME/.local/share/einkrip
+cd $HOME/.local/share/einkrpi
+
 git pull
 
 echo "Attempting to stop, disable and remove einkrpi.service for systemd"
@@ -33,8 +41,8 @@ sudo rm /etc/systemd/einkrpi.service
 echo "Installing einkrpi.service"
 envsubst < $PWD/einkrpi.service.template | sudo tee /etc/systemd/system/einkrpi.service > /dev/null
 
-sudo systemctl deamon-reexec
-sudo systemctl deamon-reload
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
 sudo systemctl enable einkrpi.service
 sudo systemctl start einkrpi.service
 sudo systemctl status einkrpi.service

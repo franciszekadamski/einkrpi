@@ -5,8 +5,8 @@ Wants=graphical.target
 
 [Service]
 Type=simple
-ExecStart=${HOME}/.local/einkrpi/epdx.py
-WorkingDirectory=${HOME}/.local/einkrpi
+ExecStart=${HOME}/.local/share/einkrpi/epdx.py
+WorkingDirectory=${HOME}/.local/share/einkrpi
 USER=${USER}
 Restart=always
 RestartSec=5

@@ -10,7 +10,6 @@ import mss
 import traceback
 
 import epd7in5_V2
-from pdf_reader import LazyPDFReader 
 
 
 # logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
