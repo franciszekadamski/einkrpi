@@ -27,7 +27,10 @@ if [ ! -d $HOME/.config/einkrpi ]; then
     mkdir -p $HOME/.config/einkrpi
 fi
 
-echo "HOME=${HOME}" > $HOME/.config/einkrpi/config.env
+if [ -z $HOME/.config/einkrpi/config.env ];then
+    echo "Creating config.env file at $HOME/.config/einkrpi/"
+    echo "HOME=${HOME}" > $HOME/.config/einkrpi/config.env
+fi
 
 if [ ! -d $HOME/.local/share/einkrpi ]; then
     echo "Cloning einkrpi repository to $HOME/.local/share/"
