@@ -6,6 +6,7 @@ It uses two files provided by Waveshare: `epdconfig.py` and `epdconfig.pyc`.
 
 The screen used is 7.5 black and white eink screen.
 
+
 # License
 
 Project is available under open source license specifiedd in [LICENSE.md].
