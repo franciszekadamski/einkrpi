@@ -1,0 +1,31 @@
+#!/bin/bash
+
+export DISPLAY=:0
+
+echo "Remote input active (DISPLAY=:0). Press Ctrl+C to exit."
+
+while true; do
+    # -r: raw input
+    # -s: silent (don't echo character to terminal)
+    # -n1: read exactly 1 character instantly without waiting for Enter
+    read -rsn1 key
+
+    # Handle multi-byte arrow key escape sequences
+    if [[ "$key" == $'\x1b' ]]; then
+        read -rsn2 -t 0.05 arrow
+        case "$arrow" in
+            "[A") xdotool key Up ;;
+            "[B") xdotool key Down ;;
+            "[C") xdotool key Right ;;
+            "[D") xdotool key Left ;;
+        esac
+        continue
+    fi
+
+    # Handle Special Keys
+    case "$key" in
+        "")  xdotool key space ;;   # Spacebar
+        $'\x7f') xdotool key BackSpace ;; # Backspace
+        *)   xdotool key "$key" ;;  # Any other letter/number/symbol (j, k, q, +, -, etc.)
+    esac
+done

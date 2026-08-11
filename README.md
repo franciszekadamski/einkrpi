@@ -18,7 +18,10 @@ You will probably need to create or edit your `.xinitrc` file with content: `exe
 It is good practice to edit your .bashrc to give it aliases:
 - `z` for zathura,
 - `f` for feh,
-- `x` for `xdotool_interactive.py` script located in your `$HOME/.local/share/einkrpi/` directory.
+- `b` for `xdotool key alt+b` to conveniently hide or show the bar,
+- `k` for `xdotool key alt+k` to move windows in the pane up,
+- `j` for `xdotool key alt+j` to move windows in the pane down,
+- `x` for `xdotool_interactive` script located in your `$HOME/.local/share/einkrpi/` directory.
 
 # License
 
