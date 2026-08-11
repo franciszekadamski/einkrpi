@@ -26,6 +26,8 @@ while true; do
     case "$key" in
         "")  xdotool key space ;;   # Spacebar
         $'\x7f') xdotool key BackSpace ;; # Backspace
+	"+") xdotool key plus ;;
+	"-") xdotool key minus ;;
         *)   xdotool key "$key" ;;  # Any other letter/number/symbol (j, k, q, +, -, etc.)
     esac
 done
