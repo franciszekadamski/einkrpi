@@ -6,6 +6,19 @@ It uses two files provided by Waveshare: `epdconfig.py` and `epdconfig.pyc`.
 
 The screen used is 7.5 black and white eink screen.
 
+# Installation
+
+For now there are some issues with install script. Make sure to do the things inside by yourself if some are not done.
+Moreover, remember to edit lightdm.conf file in your etc directory, and change rpc-lab to dwm as it is not included in the installation script.
+
+If you want to use xdotool, first export DISPLAY variable with `:0` value (`export DISPLAY=:0`) in your ssh session that you want to use xdotool from.
+
+You will probably need to create or edit your `.xinitrc` file with content: `exec dwm`.
+
+It is good practice to edit your .bashrc to give it aliases:
+- `z` for zathura,
+- `f` for feh,
+- `x` for `xdotool_interactive.py` script located in your `$HOME/.local/share/einkrpi/` directory.
 
 # License
 

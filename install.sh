@@ -4,7 +4,7 @@
 echo "Installing xserver-xorg-video-dummy"
 
 sudo apt update
-sudo apt install xserver-xorg-video-dummy
+sudo apt install xserver-xorg-video-dummy xdotool zathura mupdf feh
 
 echo "Installing python requirements"
 

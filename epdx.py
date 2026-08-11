@@ -9,6 +9,7 @@ from PIL import Image, ImageFilter, ImageChops
 import imagehash
 import mss
 import traceback
+import numpy
 
 import epd7in5_V2
 
@@ -40,7 +41,7 @@ class EPDX:
     def capture(self):
         self.capture_x11_frame()
         self.process_image()
-        similarity = self.phash_similarity()  
+        similarity = self.similarity()  
 
         if 0.6 <= similarity < 1.0:
             self.display_image_partial()
@@ -92,7 +93,12 @@ class EPDX:
         bg_image.paste(self.image, (paste_x, paste_y))
         self.image = bg_image
 
+    
+    def similarity(self):
+        difference_map = ImageChops.difference(self.previous_image, self.image)
+        return 1.0 - (numpy.mean(numpy.asarray(difference_map)) / 255.0)
 
+    # deprecated
     def phash_similarity(self):
         hash1 = imagehash.phash(self.previous_image)
         hash2 = imagehash.phash(self.image)
